@@ -6,6 +6,6 @@ namespace LukeTools
 {
     public interface IMovable
     {
-        void Move(Vector3 pos, Vector3 vel, float dt);
+        void Move(Transform t);
     }
 }

@@ -7,7 +7,7 @@ namespace LukeTools
     public class ParticleBehaviour : MonoBehaviour
     {
         IMovable movable;
-        public ParticleData pd;
+        public Transform t;
         // Use this for initialization
         void Start()
         {
@@ -17,7 +17,7 @@ namespace LukeTools
         // Update is called once per frame
         void Update()
         {
-            movable.Move(transform.position, pd.Velocity, Time.deltaTime);
+            movable.Move(t);
         }
     }
 }

@@ -6,11 +6,13 @@ namespace LukeTools
 {
     public class LinearMove : IMovable
     {
-        public Transform t;
+        public ParticleData pd;
        
-        public void Move(Vector3 pos, Vector3 vel, float dt)
+        public void Move(Transform t)
         {
-            t.position = vel;
+            pd.Acceleration = pd.Force * pd.Mass;
+            pd.Velocity = pd.Velocity + pd.Acceleration * Time.deltaTime;
+            t.position = pd.Velocity * Time.deltaTime;
         }
     }
 }
