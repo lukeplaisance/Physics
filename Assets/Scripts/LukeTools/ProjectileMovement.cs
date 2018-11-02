@@ -3,60 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CreateAssetMenu (menuName = "ProjectileMovement")]
-public class ProjectileMovement : ScriptableObject
+namespace LukeTools
 {
-    public Vector3 initial_velocity;
-    public Vector3 current_velocity;
-
-    public Vector3 initial_position;
-    public Vector3 current_position;
-
-    public Vector3 velocity;
-    public Vector3 accel;
-    public Vector3 initial_height;
-    public Vector3 current_height;
-    public Vector3 gravity = new Vector3(0, -9.81f, 0);
-
-    private float mass;
-    public float angle;
-    private float time;
-    private float speed;
-
-    public Vector2 ProjectileMove(Vector2 velocity, float angle, Vector2 initial_height)
+    [CreateAssetMenu(menuName = "ProjectileMovement")]
+    public class ProjectileMovement : ScriptableObject
     {
-        float velocity_mag = (current_velocity - initial_velocity).magnitude;
-        time = Time.deltaTime;
-        speed = velocity_mag / (accel * 2.0f).magnitude;
-        velocity_mag = 2.0f * accel.magnitude * speed;
-        
+        public Vector3 initial_velocity;
+        public Vector3 current_velocity;
 
+        public Vector3 initial_position;
+        public Vector3 current_position;
 
-        current_position.x = initial_position.x + (initial_velocity.x * time);
-        current_position.y = initial_position.y + (initial_velocity.y * time) +
-                              (1 / 2 * Mathf.Sqrt(gravity * time));
+        public Vector3 velocity;
+        public Vector3 accel;
+        public Vector3 initial_height;
+        public Vector3 current_height;
+        public Vector3 gravity = new Vector3(0, -9.81f, 0);
 
-        return current_position;
-    }
-	
-}
+        private float mass;
+        public float angle;
+        private float time;
+        private float speed;
 
-
-[CustomEditor(typeof(ProjectileMovement))]
-public class ProjectileMovementEditor : Editor
-{
-    private ProjectileMovement pm;
-    
-    public override void OnInspectorGUI()
-    {
-        pm = (ProjectileMovement)target;
-        
-
-
-        if(GUILayout.Button("Calculate"))
+        public Vector3 ProjectileMove(Vector3 velocity, float angle, Vector3 initial_height)
         {
-            pm.ProjectileMove(pm.initial_velocity, pm.angle, pm.height);
+            time = Time.deltaTime;
+            current_velocity.x = initial_velocity.x * Mathf.Cos(angle);
+            current_velocity.y = initial_velocity.y * Mathf.Sin(angle);
+
+            float velocity_mag = (current_velocity - initial_velocity).magnitude;
+           
+            speed = velocity_mag / (2.0f * gravity).magnitude;
+            velocity_mag = 2.0f * gravity.magnitude * speed;
+
+            current_position.x = initial_position.x + (initial_velocity.x * time);
+            current_position.y = initial_position.y + (initial_velocity.y * time) +
+                                  (1 / 2 * (gravity.magnitude * time));
+
+            return current_position;
         }
-        GUILayout.Box(" End Position " + pm.current_position.ToString());
+
+    }
+
+    [CustomEditor(typeof(ProjectileMovement))]
+    public class ProjectileMovementEditor : Editor
+    {
+        private ProjectileMovement pm;
+
+        public override void OnInspectorGUI()
+        {
+            pm = (ProjectileMovement)target;
+
+            if (GUILayout.Button("Calculate"))
+            {
+                pm.ProjectileMove(pm.initial_velocity, pm.angle, pm.initial_height);
+            }
+            GUILayout.Box(" End Position " + pm.current_position.ToString());
+        }
     }
 }
+
