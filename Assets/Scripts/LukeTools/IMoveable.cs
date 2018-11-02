@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace LukeTools
 {
-    public interface IMovable
+    public interface IMoveable
     {
         void Move(Transform t);
     }
