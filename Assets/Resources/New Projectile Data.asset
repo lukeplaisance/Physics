@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a987b3a94aae8634bbb2d0bf6ec29232, type: 3}
+  m_Name: New Projectile Data
+  m_EditorClassIdentifier: 
+  initial_velocity: {x: 0, y: 0, z: 0}
+  current_velocity: {x: 0, y: 0, z: 0}
+  initial_position: {x: 0, y: 0, z: 0}
+  current_position: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  accel: {x: 0, y: 0, z: 0}
+  initial_height: {x: 0, y: 0, z: 0}
+  current_height: {x: 0, y: 0, z: 0}
+  gravity: {x: 0, y: -9.81, z: 0}
+  angle: 0
+  time: 0
+  speed: 0

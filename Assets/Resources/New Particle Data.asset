@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4745f6622f126848af51828db8ee07a, type: 3}
-  m_Name: ParticleData
+  m_Name: New Particle Data
   m_EditorClassIdentifier: 
-  Position: {x: 0, y: 0, z: 0}
-  Velocity: {x: 0, y: 0, z: 0}
-  Acceleration: {x: 0, y: 0, z: 0}
   Displacement: {x: 0, y: 0, z: 0}
   Force: {x: 0, y: 0, z: 0}
   Mass: 0
+  Position: {x: 0, y: 0, z: 0}
+  Velocity: {x: 0, y: 0, z: 0}
+  Acceleration: {x: 0, y: 0, z: 0}
