@@ -6,9 +6,8 @@ namespace LukeTools
 {
     public class ProjectileBehaviour : MonoBehaviour
     {
-        IMovable movable;
-        public Transform t;
         public ProjectileMovement pm;
+        public ParticleData pd;
 
         public Vector3 velocity;
         public float angle;
@@ -17,13 +16,15 @@ namespace LukeTools
         // Use this for initialization
         void Start()
         {
-
+            pm = new ProjectileMovement();
+            velocity = pm.initial_velocity;
+            angle = pm.angle;
+            height = pm.initial_height;
         }
 
         // Update is called once per frame
         void Update()
         {
-            movable.Move(t);
             pm.ProjectileMove(velocity, angle, height);
         }
     }

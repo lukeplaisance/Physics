@@ -5,20 +5,23 @@ using UnityEngine;
 namespace LukeTools
 {
     [CreateAssetMenu (menuName = "ParticleData")]
-    public class ParticleData : ScriptableObject, IMovable
+    public class ParticleData : ScriptableObject, IMoveable
     {
-        public IMovable movable_impl;
+        public IMoveable moveable_impl;
         public Vector3 Displacement;
         public Vector3 Force;
         public float Mass;
         public Vector3 Position;
         public Vector3 Velocity;
         public Vector3 Acceleration;
-       
 
+        private void OnEnable()
+        {
+            moveable_impl = new LinearMove(this);
+        }
         public void Move(Transform t)
         {
-            movable_impl.Move(t);
+            moveable_impl.Move(t);
         }
     }
 }

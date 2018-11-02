@@ -4,10 +4,15 @@ using UnityEngine;
 
 namespace LukeTools
 {
-    public class LinearMove : IMovable
+    public class LinearMove : IMoveable
     {
         public ParticleData pd;
-       
+
+        public LinearMove(ParticleData particleData)
+        {
+            pd = particleData;
+        }
+      
         public void Move(Transform t)
         {
             pd.Acceleration = pd.Force * pd.Mass;

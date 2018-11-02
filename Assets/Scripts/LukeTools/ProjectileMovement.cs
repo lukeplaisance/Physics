@@ -18,9 +18,10 @@ namespace LukeTools
         public Vector3 accel;
         public Vector3 initial_height;
         public Vector3 current_height;
+
+        //gravity is constant
         public Vector3 gravity = new Vector3(0, -9.81f, 0);
 
-        private float mass;
         public float angle;
         private float time;
         private float speed;
@@ -31,12 +32,15 @@ namespace LukeTools
             current_velocity.x = initial_velocity.x * Mathf.Cos(angle);
             current_velocity.y = initial_velocity.y * Mathf.Sin(angle);
 
+            //calulating the magnitude of the velocity
             float velocity_mag = (current_velocity - initial_velocity).magnitude;
-           
+
+            //calculating the speed
             speed = velocity_mag / (2.0f * gravity).magnitude;
             velocity_mag = 2.0f * gravity.magnitude * speed;
 
-            current_position.x = initial_position.x + (initial_velocity.x * time);
+            //calculating the current position
+            current_position.x = initial_position.x + (initial_velocity.x * time); 
             current_position.y = initial_position.y + (initial_velocity.y * time) +
                                   (1 / 2 * (gravity.magnitude * time));
 
