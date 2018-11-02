@@ -6,25 +6,31 @@ using UnityEditor;
 [CreateAssetMenu (menuName = "ProjectileMovement")]
 public class ProjectileMovement : ScriptableObject
 {
-    public Vector2 initial_velocity;
-    public Vector2 current_velocity;
+    public Vector3 initial_velocity;
+    public Vector3 current_velocity;
 
-    public Vector2 initial_position;
-    public Vector2 current_position;
+    public Vector3 initial_position;
+    public Vector3 current_position;
 
-    public Vector2 velocity;
-    public float angle;
-    public float height;
+    public Vector3 velocity;
+    public Vector3 accel;
+    public Vector3 initial_height;
+    public Vector3 current_height;
+    public Vector3 gravity = new Vector3(0, -9.81f, 0);
 
     private float mass;
-    private float accel;
-    private float gravity;
+    public float angle;
     private float time;
+    private float speed;
 
-    public Vector2 ProjectileMove(Vector2 velocity, float angle, float height)
+    public Vector2 ProjectileMove(Vector2 velocity, float angle, Vector2 initial_height)
     {
-        gravity = (mass * accel);
+        float velocity_mag = (current_velocity - initial_velocity).magnitude;
         time = Time.deltaTime;
+        speed = velocity_mag / (accel * 2.0f).magnitude;
+        velocity_mag = 2.0f * accel.magnitude * speed;
+        
+
 
         current_position.x = initial_position.x + (initial_velocity.x * time);
         current_position.y = initial_position.y + (initial_velocity.y * time) +
