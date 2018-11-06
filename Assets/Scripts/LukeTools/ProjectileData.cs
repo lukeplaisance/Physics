@@ -20,29 +20,10 @@ namespace LukeTools
         public Vector3 current_height;
 
         //gravity is constant
-        public Vector3 gravity = new Vector3(0, -9.81f, 0);
+        public Vector3 gravity;
 
         public float angle;
         public float time;
         public float speed;
     }
-
-    [CustomEditor(typeof(ProjectileData))]
-    public class ProjectileMovementEditor : Editor
-    {
-        private ProjectileBehaviour pb = new ProjectileBehaviour();
-        public ProjectileData pd;
-
-        public override void OnInspectorGUI()
-        {
-            pd = (ProjectileData)target;
-
-            if (GUILayout.Button("Calculate"))
-            {
-                pb.ProjectileMove(pd.initial_velocity, pd.angle, pd.initial_height);
-            }
-            GUILayout.Box(" End Position " + pd.current_position.ToString());
-        }
-    }
 }
-

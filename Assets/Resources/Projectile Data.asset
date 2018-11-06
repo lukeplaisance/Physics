@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a987b3a94aae8634bbb2d0bf6ec29232, type: 3}
-  m_Name: New Projectile Data
+  m_Name: Projectile Data
   m_EditorClassIdentifier: 
   initial_velocity: {x: 0, y: 0, z: 0}
   current_velocity: {x: 0, y: 0, z: 0}

@@ -276,11 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a757fc7accf2acd4cb91e0d50076ac55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pm: {fileID: 11400000, guid: 8f4a1c27848fa7241a82b9c40cc660b0, type: 2}
-  pd: {fileID: 11400000, guid: 167f540fa58ae4c4abe4992d5e6b48e1, type: 2}
-  velocity: {x: 1, y: 1, z: 0}
-  angle: 45
-  height: {x: 0, y: 0, z: 0}
+  pd: {fileID: 11400000, guid: 0f4a9a07f786a5f4ea88c265154bd7ae, type: 2}
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
