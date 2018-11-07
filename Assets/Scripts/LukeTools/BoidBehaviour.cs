@@ -20,7 +20,7 @@ namespace LukeTools
             {
                 v1 = Boid_Cohesion(b);
                 v2 = Boid_Dispersion(b);
-                v3 = Boid_Allignment(b);
+                v3 = Boid_Alignment(b);
 
                 b.Velocity = b.Velocity + v1 + v2 + v3;
                 b.Position = b.Position + b.Velocity;
@@ -65,7 +65,7 @@ namespace LukeTools
             return c;
         }
 
-        public Vector3 Boid_Allignment(ParticleData b)
+        public Vector3 Boid_Alignment(ParticleData b)
         {
             //the number of boids
             var N = Boids.Count;
