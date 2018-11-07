@@ -7,8 +7,23 @@ namespace LukeTools
     //Change the argument of the Move function to an interface called IParticle
     public class BoidBehaviour : MonoBehaviour
     {
-        public List<ParticleData> Boids;
+        [SerializeField]
+        private List<ParticleData> Boids;
+        public List<GameObject> gameObjects;
 
+        private void Start()
+        {
+            foreach(var p in Boids)
+            {
+                p.Position = Vector3.zero;
+                p.Position = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), Random.Range(-5, 5));
+            }
+        }
+
+        private void LateUpdate()
+        {
+            MoveBoidsToNewPosition();
+        }
 
         public void MoveBoidsToNewPosition()
         {
@@ -23,7 +38,12 @@ namespace LukeTools
                 v3 = Boid_Alignment(b);
 
                 b.Velocity = b.Velocity + v1 + v2 + v3;
+
+                if (b.Velocity.magnitude > 5)
+                    b.Velocity = b.Velocity.normalized;
+
                 b.Position = b.Position + b.Velocity;
+                gameObjects[Boids.IndexOf(b)].transform.position = b.Position;
             }
         }
 
@@ -44,7 +64,7 @@ namespace LukeTools
                 }   
             }
             pc = pc / (N - 1);
-            return (pc - b.Position) / 100;
+            return (pc - b.Position) / 50;
         }
 
         public Vector3 Boid_Dispersion(ParticleData b)

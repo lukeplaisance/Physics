@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4745f6622f126848af51828db8ee07a, type: 3}
+  m_Name: Boid
+  m_EditorClassIdentifier: 
+  Displacement: {x: 0, y: 0, z: 0}
+  Force: {x: 0, y: 0, z: 0}
+  Mass: 0
+  Position: {x: 365.6813, y: -21.008123, z: 475.8597}
+  Velocity: {x: 3.2700322, y: -1.2308643, z: 3.0238073}
+  Acceleration: {x: 0, y: 0, z: 0}
