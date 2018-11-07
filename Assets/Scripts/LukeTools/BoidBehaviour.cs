@@ -11,6 +11,7 @@ namespace LukeTools
         private List<ParticleData> Boids;
         public List<GameObject> gameObjects;
 
+        //sets the positons of the boids to be in a random spot
         private void Start()
         {
             foreach(var p in Boids)
@@ -27,10 +28,12 @@ namespace LukeTools
 
         public void MoveBoidsToNewPosition()
         {
+            //declare vectors for the 3 boid rules methods
             Vector3 v1;
             Vector3 v2;
             Vector3 v3;
 
+            //calls the boid rules methods
             foreach (var b in Boids)
             {
                 v1 = Boid_Cohesion(b);
