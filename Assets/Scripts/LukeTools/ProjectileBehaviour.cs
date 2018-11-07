@@ -64,6 +64,7 @@ namespace LukeTools
             initial_height = pd.initial_height;
             current_position = pd.current_position;
         }
+
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
