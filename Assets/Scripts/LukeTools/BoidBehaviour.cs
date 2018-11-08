@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 namespace LukeTools
 {
-    //Change the argument of the Move function to an interface called IParticle
     public class BoidBehaviour : MonoBehaviour
     {
         [SerializeField]
@@ -36,6 +36,7 @@ namespace LukeTools
             //calls the boid rules methods
             foreach (var b in Boids)
             {
+                Bound_Position(b);
                 v1 = Boid_Cohesion(b);
                 v2 = Boid_Dispersion(b);
                 v3 = Boid_Alignment(b);
@@ -67,7 +68,7 @@ namespace LukeTools
                 }   
             }
             pc = pc / (N - 1);
-            return (pc - b.Position) / 50;
+            return (pc - b.Position) / 100;
         }
 
         public Vector3 Boid_Dispersion(ParticleData b)
@@ -106,6 +107,41 @@ namespace LukeTools
             }
             pv = pv / (N - 1);
             return (pv - b.Velocity) / 8;
+        }
+
+        public Vector3 Bound_Position(ParticleData b)
+        {
+            float Xmin = 0, Xmax = 0, Ymin = 0, Ymax = 0, Zmin = 0, Zmax = 0;
+            Vector3 v = new Vector3(0,0,0);
+
+            if (b.Position.x < Xmin)
+            {
+                v.x = Screen.width;
+            }
+            else if(b.Position.x > Xmax)
+            {
+                v.x = -10;
+            }
+
+            if(b.Position.y < Ymin)
+            {
+                v.y = Screen.height;
+            }
+            else if (b.Position.x > Ymax)
+            {
+                v.y = -10;
+            }
+
+            if (b.Position.y < Zmin)
+            {
+                v.z = 10;
+            }
+            else if (b.Position.x > Zmax)
+            {
+                v.z = -10;
+            }
+
+            return v;
         }
     }
 }
