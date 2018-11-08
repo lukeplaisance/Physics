@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 namespace LukeTools
 {
@@ -41,7 +39,7 @@ namespace LukeTools
                 v2 = Boid_Dispersion(b);
                 v3 = Boid_Alignment(b);
 
-                b.Velocity = b.Velocity + v1 + v2 + v3;
+                b.Velocity = b.Velocity + v1 + v2 + v3 * Time.deltaTime;
 
                 if (b.Velocity.magnitude > 5)
                     b.Velocity = b.Velocity.normalized;
@@ -57,7 +55,7 @@ namespace LukeTools
             var N = Boids.Count;
 
             //the perceived center
-            Vector3 pc = new Vector3(0,0,0);
+            Vector3 pc = Vector3.zero;
 
             //finds the average position of each boid
             foreach (var item in Boids)
@@ -68,20 +66,20 @@ namespace LukeTools
                 }   
             }
             pc = pc / (N - 1);
-            return (pc - b.Position) / 100;
+            return (pc - b.Position) / 50;
         }
 
         public Vector3 Boid_Dispersion(ParticleData b)
         {
             //the displacement of each boid
-            Vector3 c = new Vector3(0, 0, 0);
+            Vector3 c = Vector3.zero;
 
-            //if the position of a boid is less thatn 1 units away from another, 
+            //if the position of a boid is less thatn 10 units away from another, 
             //the boid will go the opposite way
             foreach (var item in Boids)
             {
                 if(item != b)
-                    if ((item.Position - b.Position).magnitude <= 1)
+                    if ((item.Position - b.Position).magnitude <= 5)
                     {
                         c = c - (item.Position - b.Position);
                     }
@@ -95,7 +93,7 @@ namespace LukeTools
             var N = Boids.Count;
 
             //percieved velocity
-            Vector3 pv = new Vector3(0,0,0);
+            Vector3 pv = Vector3.zero;
 
             //finds the average velocity of each boid
             foreach(var item in Boids)
@@ -111,34 +109,34 @@ namespace LukeTools
 
         public Vector3 Bound_Position(ParticleData b)
         {
-            float Xmin = 0, Xmax = 0, Ymin = 0, Ymax = 0, Zmin = 0, Zmax = 0;
-            Vector3 v = new Vector3(0,0,0);
+            float Xmin = 0, Xmax = 1, Ymin = 0, Ymax = 1, Zmin = 0, Zmax = 1;
+            Vector3 v = Vector3.zero;
 
             if (b.Position.x < Xmin)
             {
-                v.x = Screen.width;
+                v.x = 1;
             }
             else if(b.Position.x > Xmax)
             {
-                v.x = -10;
+                v.x = 0;
             }
 
             if(b.Position.y < Ymin)
             {
-                v.y = Screen.height;
+                v.y = 1;
             }
             else if (b.Position.x > Ymax)
             {
-                v.y = -10;
+                v.y = 0;
             }
 
             if (b.Position.y < Zmin)
             {
-                v.z = 10;
+                v.z = 1;
             }
             else if (b.Position.x > Zmax)
             {
-                v.z = -10;
+                v.z = 0;
             }
 
             return v;
