@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 namespace LukeTools
 {
@@ -9,12 +10,14 @@ namespace LukeTools
         private List<ParticleData> Boids;
         public List<GameObject> gameObjects;
 
+        public float m1 = 1.0f;
+
         //sets the positons of the boids to be in a random spot
         private void Start()
         {
             foreach(var p in Boids)
             {
-                p.Position = Vector3.zero;
+                p.Position = new Vector3(0, 5, 0);
                 p.Position = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), Random.Range(-5, 5));
             }
         }
@@ -30,6 +33,7 @@ namespace LukeTools
             Vector3 v1;
             Vector3 v2;
             Vector3 v3;
+            Vector3 v4;
 
             //calls the boid rules methods
             foreach (var b in Boids)
@@ -42,13 +46,17 @@ namespace LukeTools
                         b.perch_timer = b.perch_timer - 1;
                     }
                     else
+                    {
                         b.isPerching = false;
+                        break;
+                    }
                 }
 
-                Bound_Position(b);
-                v1 = Boid_Cohesion(b);
+                v4 = Bound_Position(b);
+                v1 = m1 * Boid_Cohesion(b);
                 v2 = Boid_Dispersion(b);
                 v3 = Boid_Alignment(b);
+               
 
                 b.Velocity = b.Velocity + v1 + v2 + v3 * Time.deltaTime;
 
@@ -127,7 +135,7 @@ namespace LukeTools
 
             Vector3 v = Vector3.zero;
 
-            if(b.Position.y < groundLevel)
+            if (b.Position.y < groundLevel)
             {
                 b.Position.y = groundLevel;
                 b.isPerching = true;
@@ -135,32 +143,49 @@ namespace LukeTools
 
             if (b.Position.x < Xmin)
             {
-                v.x = 1;
+                v.x = 10;
             }
-            else if(b.Position.x > Xmax)
+            else if (b.Position.x > Xmax)
             {
-                v.x = 0;
+                v.x = -10;
             }
 
-            if(b.Position.y < Ymin)
+            if (b.Position.y < Ymin)
             {
-                v.y = 1;
+                v.y = 10;
             }
             else if (b.Position.x > Ymax)
             {
-                v.y = 0;
+                v.y = -10;
             }
 
             if (b.Position.y < Zmin)
             {
-                v.z = 1;
+                v.z = 10;
             }
             else if (b.Position.x > Zmax)
             {
-                v.z = 0;
+                v.z = -10;
             }
 
             return v;
+        }
+    }
+
+    [CustomEditor(typeof(BoidBehaviour))]
+    public class BoidBehaviourEditor : Editor
+    {
+        private BoidBehaviour b;
+
+        private void OnEnable()
+        {
+            b = target as BoidBehaviour;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+            b.m1 = GUILayout.HorizontalSlider(b.m1, 1, -1);
         }
     }
 }
