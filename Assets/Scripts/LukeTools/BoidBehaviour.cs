@@ -34,6 +34,17 @@ namespace LukeTools
             //calls the boid rules methods
             foreach (var b in Boids)
             {
+                //checks to see if a boid is perching, if so, the perch timer starts
+                if (b.isPerching)
+                {
+                    if (b.perch_timer > 0)
+                    {
+                        b.perch_timer = b.perch_timer - 1;
+                    }
+                    else
+                        b.isPerching = false;
+                }
+
                 Bound_Position(b);
                 v1 = Boid_Cohesion(b);
                 v2 = Boid_Dispersion(b);
@@ -74,7 +85,7 @@ namespace LukeTools
             //the displacement of each boid
             Vector3 c = Vector3.zero;
 
-            //if the position of a boid is less thatn 10 units away from another, 
+            //if the position of a boid is less thatn 5 units away from another, 
             //the boid will go the opposite way
             foreach (var item in Boids)
             {
@@ -109,8 +120,18 @@ namespace LukeTools
 
         public Vector3 Bound_Position(ParticleData b)
         {
+            //min and max positions
             float Xmin = 0, Xmax = 1, Ymin = 0, Ymax = 1, Zmin = 0, Zmax = 1;
+
+            float groundLevel = 0;
+
             Vector3 v = Vector3.zero;
+
+            if(b.Position.y < groundLevel)
+            {
+                b.Position.y = groundLevel;
+                b.isPerching = true;
+            }
 
             if (b.Position.x < Xmin)
             {
