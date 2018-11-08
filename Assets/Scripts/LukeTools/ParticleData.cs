@@ -18,7 +18,7 @@ namespace LukeTools
         private void OnEnable()
         {
             moveable_impl = new LinearMove(this);
-            perch_timer = Random.Range(1, 5);
+            perch_timer = 5;
         }
         public void Move(Transform t)
         {

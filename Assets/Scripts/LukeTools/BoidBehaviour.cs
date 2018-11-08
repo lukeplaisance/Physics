@@ -7,18 +7,17 @@ namespace LukeTools
     public class BoidBehaviour : MonoBehaviour
     {
         [SerializeField]
-        private List<ParticleData> Boids;
+        public List<ParticleData> Boids;
         public List<GameObject> gameObjects;
 
-        public float m1 = 1.0f;
+        public float flock = 1.0f;
 
         //sets the positons of the boids to be in a random spot
         private void Start()
         {
             foreach(var p in Boids)
             {
-                p.Position = new Vector3(0, 5, 0);
-                p.Position = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), Random.Range(-5, 5));
+                p.Position = new Vector3(0, 40, 0);
             }
         }
 
@@ -35,7 +34,7 @@ namespace LukeTools
             Vector3 v3;
             Vector3 v4;
 
-            //calls the boid rules methods
+            //calls the boid rules methods for each boid
             foreach (var b in Boids)
             {
                 //checks to see if a boid is perching, if so, the perch timer starts
@@ -48,17 +47,16 @@ namespace LukeTools
                     else
                     {
                         b.isPerching = false;
-                        break;
                     }
                 }
 
-                v4 = Bound_Position(b);
-                v1 = m1 * Boid_Cohesion(b);
-                v2 = Boid_Dispersion(b);
-                v3 = Boid_Alignment(b);
+                v1 = Bound_Position(b);
+                v2 = flock * Boid_Cohesion(b);
+                v3 = Boid_Dispersion(b);
+                v4 = Boid_Alignment(b);
                
 
-                b.Velocity = b.Velocity + v1 + v2 + v3 * Time.deltaTime;
+                b.Velocity = b.Velocity + v2 + v3 + v4 * Time.deltaTime;
 
                 if (b.Velocity.magnitude > 5)
                     b.Velocity = b.Velocity.normalized;
@@ -79,6 +77,9 @@ namespace LukeTools
             //finds the average position of each boid
             foreach (var item in Boids)
             {
+                if (item.isPerching)
+                    continue;
+
                 if (item != b)
                 {
                     pc += item.Position;
@@ -97,7 +98,10 @@ namespace LukeTools
             //the boid will go the opposite way
             foreach (var item in Boids)
             {
-                if(item != b)
+                if (item.isPerching)
+                    continue;
+
+                if (item != b)
                     if ((item.Position - b.Position).magnitude <= 5)
                     {
                         c = c - (item.Position - b.Position);
@@ -117,7 +121,10 @@ namespace LukeTools
             //finds the average velocity of each boid
             foreach(var item in Boids)
             {
-                if(item != b)
+                if (item.isPerching)
+                    continue;
+
+                if (item != b)
                 {
                     pv += b.Velocity;
                 }
@@ -185,7 +192,15 @@ namespace LukeTools
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            b.m1 = GUILayout.HorizontalSlider(b.m1, 1, -1);
+            b.flock = GUILayout.HorizontalSlider(b.flock, 1, -1);
+
+            if(GUILayout.Button("Land Boids"))
+            {
+                foreach(var item in b.Boids)
+                {
+                    item.Position.y = 0;
+                }
+            }
         }
     }
 }

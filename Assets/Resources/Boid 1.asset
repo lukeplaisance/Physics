@@ -14,6 +14,8 @@ MonoBehaviour:
   Displacement: {x: 0, y: 0, z: 0}
   Force: {x: 0, y: 0, z: 0}
   Mass: 0
-  Position: {x: 356.15796, y: -13.469289, z: 484.3053}
-  Velocity: {x: 1.6416851, y: 1.0910442, z: 3.3546762}
+  Position: {x: -3065.5742, y: 1360.7739, z: -290.6521}
+  Velocity: {x: -1.3354566, y: -0.272522, z: 0.34512526}
   Acceleration: {x: 0, y: 0, z: 0}
+  isPerching: 0
+  perch_timer: 5

@@ -633,6 +633,7 @@ MonoBehaviour:
   - {fileID: 932913208}
   - {fileID: 916212844}
   - {fileID: 228935741}
+  flock: 1
 --- !u!4 &2070689310
 Transform:
   m_ObjectHideFlags: 0
