@@ -9,7 +9,8 @@ namespace LukeTools
         [SerializeField]
         public List<ParticleData> Boids;
         public List<GameObject> gameObjects;
-        private BoundPositionBehaviour bp = new BoundPositionBehaviour();
+
+        private float Xmin = 0, Xmax = 100, Ymin = 0, Ymax = 100, Zmin = 0, Zmax = 100;
 
         public float flock = 1.0f;
 
@@ -18,6 +19,7 @@ namespace LukeTools
         {
             foreach (var p in Boids)
             {
+                p.isPerching = false;
                 p.Position = new Vector3(0, 40, 0);
             }
         }
@@ -56,7 +58,7 @@ namespace LukeTools
                     }
                 }
 
-                v1 = bp.Bound_Position(b);
+                v1 = Bound_Position(b);
                 v2 = flock * Boid_Cohesion(b);
                 v3 = Boid_Dispersion(b);
                 v4 = Boid_Alignment(b);
@@ -70,6 +72,56 @@ namespace LukeTools
                 b.Position = b.Position + b.Velocity;
                 gameObjects[Boids.IndexOf(b)].transform.position = b.Position;
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            var rect = new Rect(Xmin, Xmax, Ymin, Ymax);
+            Gizmos.DrawCube(Vector3.zero, new Vector3(100, 100, 100));
+        }
+        public Vector3 Bound_Position(ParticleData b)
+        {
+            //min and max positions
+            
+
+            float groundLevel = 0;
+
+            Vector3 v = Vector3.zero;
+
+            if (b.Position.y < groundLevel)
+            {
+                b.Position.y = groundLevel;
+                b.isPerching = true;
+            }
+
+            if (b.Position.x < Xmin)
+            {
+                v.x = 100;
+            }
+            else if (b.Position.x > Xmax)
+            {
+                v.x = 0;
+            }
+
+            if (b.Position.y < Ymin)
+            {
+                v.y = 100;
+            }
+            else if (b.Position.x > Ymax)
+            {
+                v.y = 0;
+            }
+
+            if (b.Position.y < Zmin)
+            {
+                v.z = 100;
+            }
+            else if (b.Position.x > Zmax)
+            {
+                v.z = 0;
+            }
+
+            return v;
         }
 
         public Vector3 Boid_Cohesion(ParticleData b)
