@@ -18,7 +18,7 @@ namespace LukeTools
         private void OnEnable()
         {
             moveable_impl = new LinearMove(this);
-            perch_timer = 5;
+            perch_timer = 50;
         }
         public void Move(Transform t)
         {
