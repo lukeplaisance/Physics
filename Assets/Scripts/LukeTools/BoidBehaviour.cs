@@ -9,13 +9,14 @@ namespace LukeTools
         [SerializeField]
         public List<ParticleData> Boids;
         public List<GameObject> gameObjects;
+        private BoundPositionBehaviour bp = new BoundPositionBehaviour();
 
         public float flock = 1.0f;
 
-        //sets the positons of the boids to be in a random spot
+        //resets the boid's position on start
         private void Start()
         {
-            foreach(var p in Boids)
+            foreach (var p in Boids)
             {
                 p.Position = new Vector3(0, 40, 0);
             }
@@ -24,6 +25,11 @@ namespace LukeTools
         private void LateUpdate()
         {
             MoveBoidsToNewPosition();
+            foreach (var b in Boids)
+            {
+                b.isPerching = false;
+                Debug.DrawLine(b.Position, b.Position + b.Velocity, Color.green, Time.deltaTime);
+            }
         }
 
         public void MoveBoidsToNewPosition()
@@ -50,11 +56,11 @@ namespace LukeTools
                     }
                 }
 
-                v1 = Bound_Position(b);
+                v1 = bp.Bound_Position(b);
                 v2 = flock * Boid_Cohesion(b);
                 v3 = Boid_Dispersion(b);
                 v4 = Boid_Alignment(b);
-               
+
 
                 b.Velocity = b.Velocity + v2 + v3 + v4 * Time.deltaTime;
 
@@ -83,7 +89,7 @@ namespace LukeTools
                 if (item != b)
                 {
                     pc += item.Position;
-                }   
+                }
             }
             pc = pc / (N - 1);
             return (pc - b.Position) / 50;
@@ -119,7 +125,7 @@ namespace LukeTools
             Vector3 pv = Vector3.zero;
 
             //finds the average velocity of each boid
-            foreach(var item in Boids)
+            foreach (var item in Boids)
             {
                 if (item.isPerching)
                     continue;
@@ -133,74 +139,30 @@ namespace LukeTools
             return (pv - b.Velocity) / 8;
         }
 
-        public Vector3 Bound_Position(ParticleData b)
+        [CustomEditor(typeof(BoidBehaviour))]
+        public class BoidBehaviourEditor : Editor
         {
-            //min and max positions
-            float Xmin = 0, Xmax = 1, Ymin = 0, Ymax = 1, Zmin = 0, Zmax = 1;
+            private BoidBehaviour b;
 
-            float groundLevel = 0;
-
-            Vector3 v = Vector3.zero;
-
-            if (b.Position.y < groundLevel)
+            private void OnEnable()
             {
-                b.Position.y = groundLevel;
-                b.isPerching = true;
+                b = target as BoidBehaviour;
             }
 
-            if (b.Position.x < Xmin)
+            public override void OnInspectorGUI()
             {
-                v.x = 10;
-            }
-            else if (b.Position.x > Xmax)
-            {
-                v.x = -10;
-            }
+                base.OnInspectorGUI();
+                b.flock = GUILayout.HorizontalSlider(b.flock, 1, -1);
 
-            if (b.Position.y < Ymin)
-            {
-                v.y = 10;
-            }
-            else if (b.Position.x > Ymax)
-            {
-                v.y = -10;
-            }
-
-            if (b.Position.y < Zmin)
-            {
-                v.z = 10;
-            }
-            else if (b.Position.x > Zmax)
-            {
-                v.z = -10;
-            }
-
-            return v;
-        }
-    }
-
-    [CustomEditor(typeof(BoidBehaviour))]
-    public class BoidBehaviourEditor : Editor
-    {
-        private BoidBehaviour b;
-
-        private void OnEnable()
-        {
-            b = target as BoidBehaviour;
-        }
-
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-            b.flock = GUILayout.HorizontalSlider(b.flock, 1, -1);
-
-            if(GUILayout.Button("Land Boids"))
-            {
-                foreach(var item in b.Boids)
+                if (GUILayout.Button("Land Boids"))
                 {
-                    item.Position.y = 0;
+                    foreach (var item in b.Boids)
+                    {
+                        item.Position.y = 0;
+                    }
                 }
             }
         }
     }
 }
+
