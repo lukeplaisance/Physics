@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace LukeTools
 {
+    [System.Serializable]
     public class Particle
     {
         public Vector3 Velocity { get; set; }
@@ -12,10 +13,20 @@ namespace LukeTools
         public Vector3 Displacement { get; set; }
         public Vector3 Force { get; set; }
         public float Mass { get; set; }
+        public bool isAnchor;
 
         public void AddForce(Vector3 force)
         {
-            Force += force;
+            Force += force;            
+        }
+
+        public void Update(float dt)
+        {
+            Acceleration = Force * Mass;
+            Velocity = Velocity + Acceleration * dt;
+            Position += Velocity * dt;
+               
+            Force = Vector3.zero;
         }
     }
 }
