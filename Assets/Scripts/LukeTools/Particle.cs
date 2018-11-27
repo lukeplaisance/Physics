@@ -12,5 +12,10 @@ namespace LukeTools
         public Vector3 Displacement { get; set; }
         public Vector3 Force { get; set; }
         public float Mass { get; set; }
+
+        public void AddForce(Vector3 force)
+        {
+            Force += force;
+        }
     }
 }

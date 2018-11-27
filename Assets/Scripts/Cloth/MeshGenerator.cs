@@ -32,10 +32,10 @@ public class MeshGenerator : MonoBehaviour
         InstanceMesh.vertices = Vertices.ToArray();
 
         //create the triangles
-        for (int i = 0; i < Vertices.Capacity; i++)
+        for (int i = 0; i < Vertices.Count; i++)
         {
             //If we are not on the edge of the verts we will create  triangle
-            if (i % 5 != 5 - 1 && i < Vertices.Capacity - 5)
+            if (i % 5 != 5 - 1 && i < Vertices.Count - 5)
             {
                 //Bot Triangle
                 TrianglePoints.Add(i); //bot left
