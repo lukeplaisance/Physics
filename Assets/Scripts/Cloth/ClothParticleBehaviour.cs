@@ -10,7 +10,7 @@ public class ClothParticleBehaviour : MonoBehaviour
 	// Use this for initialization
 	void Awake ()
     {
-        particle = new Particle();
+        particle = new Particle(new Vector3(particle.Position.x, particle.Position.y, particle.Position.z));
         particle.Position = transform.position;
         particle.Mass = 1;
 	}
