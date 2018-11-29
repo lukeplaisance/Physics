@@ -15,6 +15,11 @@ namespace LukeTools
         public float Mass { get; set; }
         public bool isAnchor;
 
+        public Particle()
+        {
+            Velocity = new Vector3(0, 1, 0);
+        }
+
         public void AddForce(Vector3 force)
         {
             Force += force;            

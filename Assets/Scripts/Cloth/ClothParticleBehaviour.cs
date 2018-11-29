@@ -10,8 +10,8 @@ public class ClothParticleBehaviour : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        particle.Position = this.transform.position;
-        particle.Velocity = new Vector3(0, 1, 0);
+        particle = new Particle();
+        particle.Position = transform.position;
         particle.Mass = 1;
 	}
 	
@@ -25,9 +25,8 @@ public class ClothParticleBehaviour : MonoBehaviour
         }
 
         var gravity = new Vector3(0, -9.81f, 0);
-        
-        particle.AddForce(gravity * .25f);
+        particle.AddForce(gravity * 0.25f);
         particle.Update(Time.deltaTime);
-        this.transform.position = particle.Position;
+        transform.position = particle.Position;
     }
 }

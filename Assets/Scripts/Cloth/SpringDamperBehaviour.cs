@@ -13,9 +13,8 @@ namespace Cloth
         // Use this for initialization
         void Start()
         {
-            springDamper = new SpringDamper();
-            springDamper.p1 = p1.particle;
-            springDamper.p2 = p2.particle;
+            p1.particle.isAnchor = true;
+            springDamper = new SpringDamper(p1.particle, p2.particle);            
         }
 
         // Update is called once per frame
