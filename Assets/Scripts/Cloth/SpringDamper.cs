@@ -10,10 +10,7 @@ namespace Cloth
     {
         private float ks, kd; //spring constant, damping factor
         private float lo; //Rest length
-        public float l; //unit length
         public Particle p1, p2; //particle 1, particle 2
-        private Vector3 e; //unit length vector
-        private Vector3 ePrime;
 
         public SpringDamper(Particle a, Particle b)
         {
@@ -27,16 +24,15 @@ namespace Cloth
         public void Update()
         {
             //calculate the unit length vector between the two particle
-            ePrime = p2.Position - p1.Position;
-            l = ePrime.magnitude;
-            e = ePrime.normalized;
+            var ePrime = p2.Position - p1.Position;
+            var l = ePrime.magnitude;
+            var e = ePrime.normalized;
 
             //calculate the 1D velocities
             var v1 = Vector3.Dot(e, p1.Velocity);
             var v2 = Vector3.Dot(e, p2.Velocity);
 
-            //convert from 1D to 3D
-            var hooksLaw = -ks * (lo - l) - kd * (v1 - v2);
+            //convert from 1D to 3D            
             float fs = -ks * (lo - l);
             float fd = -kd * (v1 - v2);
             var f1 = (fs + fd) * e;

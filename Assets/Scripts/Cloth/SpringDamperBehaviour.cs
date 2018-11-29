@@ -22,5 +22,10 @@ namespace Cloth
         {
             springDamper.Update();
         }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawLine(p1.particle.Position, p2.particle.Position);
+        }
     }
 }

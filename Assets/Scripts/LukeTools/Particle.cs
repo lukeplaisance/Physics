@@ -17,7 +17,7 @@ namespace LukeTools
 
         public Particle()
         {
-            Velocity = new Vector3(0, 1, 0);
+            Velocity = new Vector3(0, -1, 0);
         }
 
         public void AddForce(Vector3 force)
@@ -27,6 +27,11 @@ namespace LukeTools
 
         public void Update(float dt)
         {
+            if (isAnchor)
+            {
+                Force = Vector3.zero;
+                return;
+            }
             Acceleration = Force * Mass;
             Velocity = Velocity + Acceleration * dt;
             Position += Velocity * dt;

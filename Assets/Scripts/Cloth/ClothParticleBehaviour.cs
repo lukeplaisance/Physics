@@ -8,7 +8,7 @@ public class ClothParticleBehaviour : MonoBehaviour
     public Particle particle;
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
     {
         particle = new Particle();
         particle.Position = transform.position;
@@ -18,11 +18,7 @@ public class ClothParticleBehaviour : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if(particle.isAnchor)
-        {
-            particle.Force = Vector3.zero;
-            return;
-        }
+  
 
         var gravity = new Vector3(0, -9.81f, 0);
         particle.AddForce(gravity * 0.25f);
