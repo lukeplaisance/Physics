@@ -17,7 +17,7 @@ namespace Cloth
             p1 = a;
             p2 = b;
             lo = Vector3.Distance(p1.Position, p2.Position);
-            ks = 50;
+            ks = 75;
             kd = 2;
         }
 

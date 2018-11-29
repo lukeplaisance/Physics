@@ -19,6 +19,7 @@ namespace LukeTools
         {
             Position = pos;
             Velocity = new Vector3(0, -1, 0);
+            Mass = 1;
         }
 
         public void AddForce(Vector3 force)

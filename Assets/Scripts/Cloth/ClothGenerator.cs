@@ -24,11 +24,16 @@ namespace Cloth
                 }
             }
 
-            var allSprings = (width - 1) * height + (height - 1) * width;
-
             for (int i = 0; i < Particles.Count; i++)
             {
-                Springs.Add(new SpringDamper(Particles[i], Particles[i++]));
+                if (i % width != width - 1)
+                {
+                    Springs.Add(new SpringDamper(Particles[i], Particles[i + 1]));
+                }
+                if (i < Particles.Count - height)
+                {
+                    Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width]));
+                }
             }
 
             foreach(var particle in Particles)
@@ -46,7 +51,11 @@ namespace Cloth
                 Gizmos.color = Color.green;
                 Gizmos.DrawSphere(p.Position, .25f);
             }
-           
+           foreach(var s in Springs)
+            {
+                Gizmos.color = Color.white;
+                Gizmos.DrawLine(s.p1.Position, s.p2.Position);
+            }
         }
 
         // Update is called once per frame
@@ -60,7 +69,7 @@ namespace Cloth
             foreach (var particle in Particles)
             {
                 var gravity = new Vector3(0, -9.81f, 0);
-                particle.AddForce(gravity * 0.25f);
+                particle.AddForce(gravity * .25f);
                 particle.Update(Time.deltaTime);
                 transform.position = particle.Position;
             }
