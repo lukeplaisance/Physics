@@ -34,6 +34,15 @@ namespace Cloth
                 {
                     Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width]));
                 }
+
+                if (i % width == 0)
+                {
+                    Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width + 1]));
+                }
+                else if (i % width == width - 1)
+                {
+                    Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width - 1]));
+                }
             }
 
             foreach(var particle in Particles)
