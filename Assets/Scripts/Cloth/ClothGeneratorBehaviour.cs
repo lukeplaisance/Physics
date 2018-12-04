@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using LukeTools;
+using UnityEditor;
 
 namespace Cloth
 {
-    public class ClothGenerator : MonoBehaviour
+    public class ClothGeneratorBehaviour : MonoBehaviour
     {
         private List<Particle> Particles = new List<Particle>();
         private List<SpringDamper> Springs = new List<SpringDamper>();
+        public List<AeroDynamicForce> Triangles = new List<AeroDynamicForce>();
         public float width;
         public float height;
 
@@ -45,6 +47,19 @@ namespace Cloth
                 }
             }
 
+            for (int i = 0; i < Particles.Count; i++)
+            {
+                //If we are not on the edge of the verts we will create  triangle
+                if (i % 5 != 5 - 1 && i < Particles.Count - 5)
+                {
+                    //Bot Triangle
+                    Triangles.Add(new AeroDynamicForce(Particles[i], Particles[i + 1], Particles[i + (int)width]));             
+
+                    //Top Trianlge
+                    Triangles.Add(new AeroDynamicForce(Particles[i + 1], Particles[i + (int)width + 1], Particles[i + (int)width]));                   
+                }
+            }            
+
             foreach (var particle in Particles)
             {
                 if (particle.Position.y == height - 1)
@@ -74,7 +89,10 @@ namespace Cloth
             {
                 s.Update();
             }
-
+            foreach(var force in Triangles)
+            {
+                force.Update();
+            }
             foreach (var particle in Particles)
             {
                 var gravity = new Vector3(0, -9.81f, 0);
@@ -82,7 +100,28 @@ namespace Cloth
                 particle.Update(Time.deltaTime);
                 transform.position = particle.Position;
             }
-        }
 
+   
+        }
     }
+//#if UNITY_EDITOR
+
+//    [CustomEditor(typeof(ClothGeneratorBehaviour))]
+//    public class ClothBehaviourEditor : Editor
+//    {
+//        //private ClothGenerator cg;
+//        private ClothGeneratorBehaviour cg;
+
+//        private void OnEnable()
+//        {
+//            cg = target as ClothGeneratorBehaviour;
+//        }
+
+//        public override void OnInspectorGUI()
+//        {
+//            base.OnInspectorGUI();
+
+//        }
+//    }
+
 }
