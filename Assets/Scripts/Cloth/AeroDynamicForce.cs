@@ -18,7 +18,7 @@ public class AeroDynamicForce
         r1 = p1;
         r2 = p2;
         r3 = p3;
-        density = new Vector3(0, 0, 5);
+        density = new Vector3(0, 0, 3);
     }
 
 
