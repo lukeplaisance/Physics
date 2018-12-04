@@ -39,9 +39,9 @@ namespace Cloth
 
                 if (i % width != width - 1 && i < Particles.Count - width)
                 {
-                    Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width + 1]));                    
+                    Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width + 1]));
                 }
-                if(i % width != 0 && i < Particles.Count - height)
+                if (i % width != 0 && i < Particles.Count - height)
                 {
                     Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width - 1]));
                 }
@@ -53,12 +53,12 @@ namespace Cloth
                 if (i % 5 != 5 - 1 && i < Particles.Count - 5)
                 {
                     //Bot Triangle
-                    Triangles.Add(new AeroDynamicForce(Particles[i], Particles[i + 1], Particles[i + (int)width]));             
+                    Triangles.Add(new AeroDynamicForce(Particles[i], Particles[i + 1], Particles[i + (int)width]));
 
                     //Top Trianlge
-                    Triangles.Add(new AeroDynamicForce(Particles[i + 1], Particles[i + (int)width + 1], Particles[i + (int)width]));                   
+                    Triangles.Add(new AeroDynamicForce(Particles[i + 1], Particles[i + (int)width + 1], Particles[i + (int)width]));
                 }
-            }            
+            }
 
             foreach (var particle in Particles)
             {
@@ -70,26 +70,34 @@ namespace Cloth
         }
         void OnDrawGizmos()
         {
-            foreach(var p in Particles)
+            foreach (var p in Particles)
             {
                 Gizmos.color = Color.green;
                 Gizmos.DrawSphere(p.Position, .25f);
             }
-           foreach(var s in Springs)
+            foreach (var s in Springs)
             {
                 Gizmos.color = Color.white;
                 Gizmos.DrawLine(s.p1.Position, s.p2.Position);
+            }
+
+            foreach (var t in Triangles)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(t.r1.Position, t.r2.Position);
+                Gizmos.DrawLine(t.r2.Position, t.r3.Position);
+                Gizmos.DrawLine(t.r3.Position, t.r1.Position);
             }
         }
 
         // Update is called once per frame
         void Update()
         {
-            foreach(var s in Springs)
+            foreach (var s in Springs)
             {
                 s.Update();
             }
-            foreach(var force in Triangles)
+            foreach (var force in Triangles)
             {
                 force.Update();
             }
@@ -101,27 +109,7 @@ namespace Cloth
                 transform.position = particle.Position;
             }
 
-   
+
         }
     }
-//#if UNITY_EDITOR
-
-//    [CustomEditor(typeof(ClothGeneratorBehaviour))]
-//    public class ClothBehaviourEditor : Editor
-//    {
-//        //private ClothGenerator cg;
-//        private ClothGeneratorBehaviour cg;
-
-//        private void OnEnable()
-//        {
-//            cg = target as ClothGeneratorBehaviour;
-//        }
-
-//        public override void OnInspectorGUI()
-//        {
-//            base.OnInspectorGUI();
-
-//        }
-//    }
-
 }
