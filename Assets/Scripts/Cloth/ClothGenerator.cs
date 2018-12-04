@@ -30,22 +30,22 @@ namespace Cloth
                 {
                     Springs.Add(new SpringDamper(Particles[i], Particles[i + 1]));
                 }
-                if (i < Particles.Count - height)
+                if (i < Particles.Count - width)
                 {
                     Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width]));
                 }
 
-                if (i % width == 0)
+                if (i % width != width - 1 && i < Particles.Count - width)
                 {
-                    Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width + 1]));
+                    Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width + 1]));                    
                 }
-                else if (i % width == width - 1)
+                if(i % width != 0 && i < Particles.Count - height)
                 {
                     Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width - 1]));
                 }
             }
 
-            foreach(var particle in Particles)
+            foreach (var particle in Particles)
             {
                 if (particle.Position.y == height - 1)
                 {
