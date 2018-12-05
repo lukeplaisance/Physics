@@ -14,16 +14,14 @@ namespace LukeTools
         public Vector3 Force { get; set; }
         public float Mass { get; set; }
         public bool isAnchor;
-        public bool isGrabbed;
-        public bool isActive;
+        public bool isActive = true;
+        public string name = "null";
 
         public Particle(Vector3 pos)
         {
             Position = pos;
             Velocity = new Vector3(0, -1, 0);
             Mass = 1;
-            isActive = true;
-            isGrabbed = false;
         }
 
         public void AddForce(Vector3 force)
@@ -33,11 +31,6 @@ namespace LukeTools
 
         public void Update(float dt)
         {
-            var distance = Vector3.Distance(Position, Input.mousePosition);
-            if(distance <= .1f && Input.GetMouseButton(0))
-            {
-                isGrabbed = true;
-            }
 
             if (isAnchor)
             {

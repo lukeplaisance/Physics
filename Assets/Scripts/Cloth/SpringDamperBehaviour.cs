@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 namespace Cloth
 {
@@ -14,7 +15,7 @@ namespace Cloth
         void Start()
         {
             p1.particle.isAnchor = true;
-            springDamper = new SpringDamper(p1.particle, p2.particle);            
+            springDamper = new SpringDamper(p1.particle, p2.particle);
         }
 
         // Update is called once per frame

@@ -8,16 +8,23 @@ namespace Cloth
 {
     public class ClothGeneratorBehaviour : MonoBehaviour
     {
-        [SerializeField]
-        private List<Particle> Particles = new List<Particle>();
-        List<GameObject> gameObjects = new List<GameObject>();
+        public List<Particle> Particles = new List<Particle>();
+        private List<GameObject> gameObjects = new List<GameObject>();
         private List<SpringDamper> Springs = new List<SpringDamper>();
         public List<AeroDynamicForce> Triangles = new List<AeroDynamicForce>();
+
+        private SpringDamper spring;
         public float width;
         public float height;
-
+        private Particle grabbed;
+        private Vector3 worldMouse;
 
         void Awake()
+        {
+            GenCloth();
+        }
+
+        public void GenCloth()
         {
             for (float x = 0; x < width; x++)
             {
@@ -69,6 +76,7 @@ namespace Cloth
                 }
             }
         }
+
         void OnDrawGizmos()
         {
             foreach (var p in Particles)
@@ -76,10 +84,10 @@ namespace Cloth
                 Gizmos.color = Color.green;
                 Gizmos.DrawSphere(p.Position, .25f);
 
-                if(p.isGrabbed)
-                {
-                    Gizmos.color = Color.blue;
-                }
+                //if(p.isGrabbed)
+                //{
+                //    Gizmos.color = Color.blue;
+                //}
             }
             foreach (var s in Springs)
             {
@@ -94,18 +102,52 @@ namespace Cloth
             var mousePos = Input.mousePosition;
             Debug.Log(mousePos);
 
-            
+            worldMouse = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 
+                                                        -Camera.main.transform.position.z));
 
-            for(int i = 0; i < Particles.Count; i++)
+            if(Input.GetMouseButtonDown(0))
             {
-                if (Particles[i].isGrabbed && Input.GetKey(KeyCode.A))
+                foreach(var p in Particles)
                 {
-                    Particles[i].isActive = false;
-                    Particles.Remove(Particles[i]);
+                    var scalePosition = new Vector3(p.Position.x * transform.localScale.x, 
+                                                    p.Position.y * transform.localScale.y, 
+                                                    p.Position.z * transform.localScale.z);
+                    var checkPos = new Vector3(worldMouse.x, worldMouse.y, p.Position.z);
+                    if (Vector3.Distance(checkPos, scalePosition) <= 1f)
+                        grabbed = p;
                 }
             }
 
+            if(Input.GetMouseButton(0) && grabbed != null)
+            {
+                grabbed.Position = worldMouse;
+                if(grabbed.Force.magnitude >= 1 || Input.GetKeyDown(KeyCode.A))
+                {
+                    grabbed.isActive = true;
+                    for(var i = 0; i < Springs.Count; i++)
+                    {
+                        if(Springs[i].CheckParticles(grabbed))
+                        {
+                            Springs.RemoveAt(i);
+                        }
+                    }
+                    for (var i = 0; i < Triangles.Count; i++)
+                    {
+                        if(Triangles[i].CheckParticles(grabbed))
+                        {
+                            Triangles.RemoveAt(i);
+                        }
+                    }
+                    if (Input.GetKeyDown(KeyCode.A))
+                        grabbed.isAnchor = !grabbed.isAnchor;
+                }
+                if (Input.GetMouseButtonUp(0))
+                    grabbed = null;
+            }
+        }
 
+        private void LateUpdate()
+        {
             foreach (var s in Springs)
             {
                 s.Update();
@@ -118,10 +160,10 @@ namespace Cloth
             {
                 var gravity = new Vector3(0, -9.81f, 0);
                 particle.AddForce(gravity * .25f);
-                particle.Update(Time.deltaTime);                
+                particle.Update(Time.deltaTime);
             }
 
-            for(int i = 0; i < gameObjects.Count; i++)
+            for (int i = 0; i < gameObjects.Count; i++)
             {
                 gameObjects[i].transform.position = Particles[i].Position;
             }

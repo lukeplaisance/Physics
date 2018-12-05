@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43329424, g: 0.46989405, b: 0.5056234, a: 1}
+  m_IndirectSpecularColor: {r: 0.4332942, g: 0.46989387, b: 0.5056223, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -146,6 +146,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particle:
     isAnchor: 1
+    isActive: 0
+    name: 
 --- !u!114 &1151799816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,10 +160,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   springDamper:
+    ks: 0
+    kd: 0
     p1:
       isAnchor: 0
+      isActive: 0
+      name: 
     p2:
       isAnchor: 0
+      isActive: 0
+      name: 
   p1: {fileID: 1151799815}
   p2: {fileID: 1560672008}
 --- !u!136 &1151799817
@@ -264,6 +272,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particle:
     isAnchor: 0
+    isActive: 0
+    name: 
 --- !u!136 &1560672009
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -486,6 +496,7 @@ GameObject:
   - component: {fileID: 2104083787}
   - component: {fileID: 2104083786}
   - component: {fileID: 2104083788}
+  - component: {fileID: 2104083790}
   m_Layer: 0
   m_Name: Cloth
   m_TagString: Untagged
@@ -546,8 +557,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f41016112dcf8d45a2f22eb1fd42b87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 5
-  height: 5
+  Particles: []
+  width: 25
+  height: 25
 --- !u!4 &2104083789
 Transform:
   m_ObjectHideFlags: 0
@@ -561,3 +573,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2104083790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2104083785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e4bd95f69431fb4d8f660d099c1e95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InstanceMeshFilter: {fileID: 2104083787}
+  InstanceMesh: {fileID: 0}
+  cloth: {fileID: 2104083788}

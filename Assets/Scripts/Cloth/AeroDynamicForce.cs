@@ -18,9 +18,13 @@ public class AeroDynamicForce
         r1 = p1;
         r2 = p2;
         r3 = p3;
-        density = new Vector3(0, 0, 3);
+        density = new Vector3(0, 0, 1);
     }
 
+    public bool CheckParticles(Particle par)
+    {
+        return par.name == r1.name || par.name == r2.name || par.name == r3.name;
+    }
 
     public void Update()
     {

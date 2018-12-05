@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LukeTools;
 
 namespace Cloth
 {
@@ -14,6 +15,10 @@ namespace Cloth
         private List<Vector3> SurfaceNormals = new List<Vector3>();
         private List<Vector2> UVs = new List<Vector2>();
 
+        [SerializeField]
+        private ClothGeneratorBehaviour cloth;
+        private Particle particle;
+
 
 
         public void Awake()
@@ -21,9 +26,9 @@ namespace Cloth
             InstanceMesh = new Mesh();
             InstanceMesh.name = "Mesh";
             //creates and adds new verts to the Vertices list
-            for (int x = 0; x < 5; x++)
+            for (int x = 0; x < cloth.width; x++)
             {
-                for (int y = 0; y < 5; y++)
+                for (int y = 0; y < cloth.width; y++)
                 {
                     Vertices.Add(new Vector3(x, y, 0));
                 }
@@ -35,16 +40,16 @@ namespace Cloth
             for (int i = 0; i < Vertices.Count; i++)
             {
                 //If we are not on the edge of the verts we will create  triangle
-                if (i % 5 != 5 - 1 && i < Vertices.Count - 5)
+                if (i % (int)cloth.width != (int)cloth.width - 1 && i < Vertices.Count - (int)cloth.width)
                 {
                     //Bot Triangle
                     TrianglePoints.Add(i); //bot left
                     TrianglePoints.Add(i + 1); //bot right
-                    TrianglePoints.Add(i + 5); //top Left
+                    TrianglePoints.Add(i + (int)cloth.width); //top Left
 
                     //Top Trianlge
                     TrianglePoints.Add(i + 1); //bot right
-                    TrianglePoints.Add(i + 5 + 1); //top right
+                    TrianglePoints.Add(i + (int)cloth.width + 1); //top right
                     TrianglePoints.Add(i + 5); //top left
                 }
             }
@@ -53,7 +58,7 @@ namespace Cloth
             //set the surface normals
             foreach (var vert in Vertices)
             {
-                SurfaceNormals.Add(new Vector3(0, 0, 1));
+                SurfaceNormals.Add(particle.Velocity);
             }
             InstanceMesh.normals = SurfaceNormals.ToArray();
 
@@ -61,7 +66,7 @@ namespace Cloth
             foreach (var vert in Vertices)
             {
                 //We set the x and y of each UV to be the x and y values of the vert's posititon divided by the width of the verts - 1
-                UVs.Add(new Vector2(vert.x / (5 - 1), vert.y / (5 - 1)));
+                UVs.Add(new Vector2(vert.x / ((int)cloth.width - 1), vert.y / ((int)cloth.width - 1)));
             }
             InstanceMesh.uv = UVs.ToArray();
 
