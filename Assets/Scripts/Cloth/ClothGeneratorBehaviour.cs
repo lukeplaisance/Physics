@@ -37,6 +37,7 @@ namespace Cloth
                 }
             }
 
+            //adding the spring dampers
             for (int i = 0; i < Particles.Count; i++)
             {
                 if (i % width != width - 1)
@@ -83,12 +84,8 @@ namespace Cloth
             {
                 Gizmos.color = Color.green;
                 Gizmos.DrawSphere(p.Position, .25f);
-
-                //if(p.isGrabbed)
-                //{
-                //    Gizmos.color = Color.blue;
-                //}
             }
+
             foreach (var s in Springs)
             {
                 Gizmos.color = Color.white;
@@ -100,7 +97,6 @@ namespace Cloth
         void Update()
         {
             var mousePos = Input.mousePosition;
-            Debug.Log(mousePos);
 
             worldMouse = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 
                                                         -Camera.main.transform.position.z));
@@ -121,7 +117,7 @@ namespace Cloth
             if(Input.GetMouseButton(0) && grabbed != null)
             {
                 grabbed.Position = worldMouse;
-                if(grabbed.Force.magnitude >= 1 || Input.GetKeyDown(KeyCode.A))
+                if(grabbed.Force.magnitude >= 5 || Input.GetKeyDown(KeyCode.A))
                 {
                     grabbed.isActive = true;
                     for(var i = 0; i < Springs.Count; i++)
@@ -143,6 +139,8 @@ namespace Cloth
                 }
                 if (Input.GetMouseButtonUp(0))
                     grabbed = null;
+
+               
             }
         }
 
@@ -156,6 +154,7 @@ namespace Cloth
             {
                 force.Update();
             }
+
             foreach (var particle in Particles)
             {
                 var gravity = new Vector3(0, -9.81f, 0);
@@ -166,6 +165,7 @@ namespace Cloth
             for (int i = 0; i < gameObjects.Count; i++)
             {
                 gameObjects[i].transform.position = Particles[i].Position;
+                Destroy(gameObjects[i].GetComponent("SphereCollider"));
             }
         }
     }
