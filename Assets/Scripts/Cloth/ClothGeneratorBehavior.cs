@@ -159,6 +159,7 @@ namespace Cloth
             for (int i = 0; i < gameObjects.Count; i++)
             {
                 gameObjects[i].transform.position = Particles[i].Position;
+                gameObjects[i].transform.localScale = new Vector3(.2f, .2f, .2f);
                 Destroy(gameObjects[i].GetComponent("SphereCollider"));
             }
         }
