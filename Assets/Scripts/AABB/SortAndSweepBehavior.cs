@@ -7,75 +7,65 @@ namespace AABB
 {
     public class SortAndSweepBehavior : MonoBehaviour
     {
-        public List<CollisionVolume> xValues = new List<CollisionVolume>();
-        public List<CollisionVolume> yValues = new List<CollisionVolume>();
+        public List<CollisionVolume> AllVolumes = new List<CollisionVolume>();
+        //public List<CollisionVolume> xValues = new List<CollisionVolume>();
+        //public List<CollisionVolume> yValues = new List<CollisionVolume>();
         public List<CollisionVolume> activeList = new List<CollisionVolume>();
         public List<CollisionVolume> closedList = new List<CollisionVolume>();
 
-        void Awake()
+        private void Start()
         {
-            foreach(var volume in xValues)
-            {
-                activeList.Add(volume);
-            }
-
-            foreach(var volume in yValues)
-            {
-                activeList.Add(volume);
-            }
+            activeList = new List<CollisionVolume>();
+            closedList = new List<CollisionVolume>();
         }
-
-        private void OnDrawGizmos()
-        {
-            foreach (var cv in activeList)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireCube(cv.volume, new Vector3(1.1f, 1.1f, 1.1f));
-            }
-        }
-
 
         public void Update()
         {
-            CheckCollisionForXAxis();
-            CheckCollisionForYAxis();
+            CheckCollision();
         }
 
-        public void CheckCollisionForXAxis()
+        public void CheckCollision()
         {
-            xValues.OrderBy(v => v.min);
-            for(int i = 0; i < xValues.Count; i++)
+            for(int i = 0; i < AllVolumes.Count; i++)
             {
-                foreach(var volume in xValues)
+                if (!activeList.Contains(AllVolumes[i]))
+                    activeList.Add(AllVolumes[i]);
+
+                if (activeList.Count >= 2)
                 {
-                    if(activeList.Count >= 2)
+                    if (activeList[0].min.x < activeList[1].max.x && activeList[0].max.x > activeList[1].min.x) 
                     {
-                        if(activeList[0].min.x <= activeList[1].max.x)
+                        if(activeList[0].min.y < activeList[1].max.y && activeList[0].max.y > activeList[1].min.y)
                         {
+                            Debug.Log("collision");
+                            activeList[0].isColliding = true;
+                            activeList[1].isColliding = true;
                             closedList.Add(activeList[0]);
                             activeList.Remove(activeList[0]);
-                            Debug.Log("collision on X axis");
+                        }
+                        else
+                        {
+                            Debug.Log("collision on Y but no collision on X");
+                            activeList[0].isColliding = false;
+                            activeList[1].isColliding = false;
+                            closedList.Add(activeList[0]);
+                            activeList.Remove(activeList[0]);
                         }
                     }
-                }
-            }
-        }
-
-        public void CheckCollisionForYAxis()
-        {
-            yValues.OrderBy(v => v.min);
-            for (int i = 0; i < yValues.Count; i++)
-            {
-                foreach (var volume in yValues)
-                {
-                    if (activeList.Count >= 2)
+                    else if (activeList[0].min.y < activeList[1].max.y && activeList[0].max.y > activeList[1].min.y)
                     {
-                        if (activeList[0].min.y <= activeList[1].max.y)
-                        {
-                            closedList.Add(activeList[0]);
-                            activeList.Remove(activeList[0]);
-                            Debug.Log("collision on Y axis");
-                        }
+                        Debug.Log("collision on X but no collision on Y");
+                        activeList[0].isColliding = false;
+                        activeList[1].isColliding = false;
+                        closedList.Add(activeList[0]);
+                        activeList.Remove(activeList[0]);
+                    }
+                    else
+                    {
+                        Debug.Log("No Collision");
+                        activeList[0].isColliding = false;
+                        activeList[1].isColliding = false;
+                        closedList.Remove(AllVolumes[i]);
                     }
                 }
             }

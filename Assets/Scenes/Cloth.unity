@@ -145,12 +145,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particle:
-    <Velocity>k__BackingField: {x: 0, y: 0, z: 0}
-    <Position>k__BackingField: {x: 0, y: 0, z: 0}
-    <Acceleration>k__BackingField: {x: 0, y: 0, z: 0}
-    <Displacement>k__BackingField: {x: 0, y: 0, z: 0}
-    <Force>k__BackingField: {x: 0, y: 0, z: 0}
-    <Mass>k__BackingField: 0
     isAnchor: 1
     isActive: 0
     name: 
@@ -168,24 +162,11 @@ MonoBehaviour:
   springDamper:
     ks: 0
     kd: 0
-    lo: 0
     p1:
-      <Velocity>k__BackingField: {x: 0, y: 0, z: 0}
-      <Position>k__BackingField: {x: 0, y: 0, z: 0}
-      <Acceleration>k__BackingField: {x: 0, y: 0, z: 0}
-      <Displacement>k__BackingField: {x: 0, y: 0, z: 0}
-      <Force>k__BackingField: {x: 0, y: 0, z: 0}
-      <Mass>k__BackingField: 0
       isAnchor: 0
       isActive: 0
       name: 
     p2:
-      <Velocity>k__BackingField: {x: 0, y: 0, z: 0}
-      <Position>k__BackingField: {x: 0, y: 0, z: 0}
-      <Acceleration>k__BackingField: {x: 0, y: 0, z: 0}
-      <Displacement>k__BackingField: {x: 0, y: 0, z: 0}
-      <Force>k__BackingField: {x: 0, y: 0, z: 0}
-      <Mass>k__BackingField: 0
       isAnchor: 0
       isActive: 0
       name: 
@@ -290,12 +271,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particle:
-    <Velocity>k__BackingField: {x: 0, y: 0, z: 0}
-    <Position>k__BackingField: {x: 0, y: 0, z: 0}
-    <Acceleration>k__BackingField: {x: 0, y: 0, z: 0}
-    <Displacement>k__BackingField: {x: 0, y: 0, z: 0}
-    <Force>k__BackingField: {x: 0, y: 0, z: 0}
-    <Mass>k__BackingField: 0
     isAnchor: 0
     isActive: 0
     name: 
