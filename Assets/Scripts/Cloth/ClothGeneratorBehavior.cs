@@ -6,7 +6,7 @@ using UnityEditor;
 
 namespace Cloth
 {
-    public class ClothGeneratorBehaviour : MonoBehaviour
+    public class ClothGeneratorBehavior : MonoBehaviour
     {
         public List<Particle> Particles = new List<Particle>();
         private List<GameObject> gameObjects = new List<GameObject>();
@@ -80,12 +80,6 @@ namespace Cloth
 
         void OnDrawGizmos()
         {
-            foreach (var p in Particles)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawSphere(p.Position, .25f);
-            }
-
             foreach (var s in Springs)
             {
                 Gizmos.color = Color.white;

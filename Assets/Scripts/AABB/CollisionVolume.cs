@@ -4,10 +4,12 @@ using UnityEngine;
 
 namespace AABB
 {
-    public class CollisionVolume2D
+    public class CollisionVolume
     {
-        public Vector2 min;
-        public Vector2 max;
+        public Vector3 min;
+        public Vector3 max;
         public bool isColliding = false;
+        public Vector3 cvCenter;
+        public Vector3 volume;
     }
 }

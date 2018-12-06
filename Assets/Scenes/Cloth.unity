@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4332942, g: 0.46989387, b: 0.5056223, a: 1}
+  m_IndirectSpecularColor: {r: 0.43329424, g: 0.46989405, b: 0.5056234, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -145,6 +145,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particle:
+    <Velocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <Position>k__BackingField: {x: 0, y: 0, z: 0}
+    <Acceleration>k__BackingField: {x: 0, y: 0, z: 0}
+    <Displacement>k__BackingField: {x: 0, y: 0, z: 0}
+    <Force>k__BackingField: {x: 0, y: 0, z: 0}
+    <Mass>k__BackingField: 0
     isAnchor: 1
     isActive: 0
     name: 
@@ -162,11 +168,24 @@ MonoBehaviour:
   springDamper:
     ks: 0
     kd: 0
+    lo: 0
     p1:
+      <Velocity>k__BackingField: {x: 0, y: 0, z: 0}
+      <Position>k__BackingField: {x: 0, y: 0, z: 0}
+      <Acceleration>k__BackingField: {x: 0, y: 0, z: 0}
+      <Displacement>k__BackingField: {x: 0, y: 0, z: 0}
+      <Force>k__BackingField: {x: 0, y: 0, z: 0}
+      <Mass>k__BackingField: 0
       isAnchor: 0
       isActive: 0
       name: 
     p2:
+      <Velocity>k__BackingField: {x: 0, y: 0, z: 0}
+      <Position>k__BackingField: {x: 0, y: 0, z: 0}
+      <Acceleration>k__BackingField: {x: 0, y: 0, z: 0}
+      <Displacement>k__BackingField: {x: 0, y: 0, z: 0}
+      <Force>k__BackingField: {x: 0, y: 0, z: 0}
+      <Mass>k__BackingField: 0
       isAnchor: 0
       isActive: 0
       name: 
@@ -271,6 +290,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particle:
+    <Velocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <Position>k__BackingField: {x: 0, y: 0, z: 0}
+    <Acceleration>k__BackingField: {x: 0, y: 0, z: 0}
+    <Displacement>k__BackingField: {x: 0, y: 0, z: 0}
+    <Force>k__BackingField: {x: 0, y: 0, z: 0}
+    <Mass>k__BackingField: 0
     isAnchor: 0
     isActive: 0
     name: 
@@ -493,10 +518,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2104083789}
-  - component: {fileID: 2104083787}
-  - component: {fileID: 2104083786}
   - component: {fileID: 2104083788}
-  - component: {fileID: 2104083790}
   m_Layer: 0
   m_Name: Cloth
   m_TagString: Untagged
@@ -504,48 +526,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!23 &2104083786
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2104083785}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &2104083787
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2104083785}
-  m_Mesh: {fileID: 0}
 --- !u!114 &2104083788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,8 +538,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Particles: []
-  width: 25
-  height: 25
+  width: 5
+  height: 5
 --- !u!4 &2104083789
 Transform:
   m_ObjectHideFlags: 0
@@ -573,17 +553,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2104083790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2104083785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e4bd95f69431fb4d8f660d099c1e95c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InstanceMeshFilter: {fileID: 2104083787}
-  InstanceMesh: {fileID: 0}
-  cloth: {fileID: 2104083788}

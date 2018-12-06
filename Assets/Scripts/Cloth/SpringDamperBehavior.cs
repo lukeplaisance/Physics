@@ -5,11 +5,11 @@ using UnityEditor;
 
 namespace Cloth
 {
-    public class SpringDamperBehaviour : MonoBehaviour
+    public class SpringDamperBehavior : MonoBehaviour
     {
         [SerializeField]
         public SpringDamper springDamper;
-        public ClothParticleBehaviour p1, p2;
+        public ParticleBehavior p1, p2;
 
         // Use this for initialization
         void Start()
@@ -22,11 +22,6 @@ namespace Cloth
         void Update()
         {
             springDamper.Update();
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawLine(p1.particle.Position, p2.particle.Position);
         }
     }
 }

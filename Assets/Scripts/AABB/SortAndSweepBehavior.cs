@@ -5,18 +5,40 @@ using UnityEngine;
 
 namespace AABB
 {
-    public class SortAndSweepBehaviour : MonoBehaviour
+    public class SortAndSweepBehavior : MonoBehaviour
     {
-        public List<CollisionVolume2D> xValues;
-        private List<CollisionVolume2D> yValues;
-        public List<CollisionVolume2D> activeList;
-        public List<CollisionVolume2D> closedList;
+        public List<CollisionVolume> xValues = new List<CollisionVolume>();
+        public List<CollisionVolume> yValues = new List<CollisionVolume>();
+        public List<CollisionVolume> activeList = new List<CollisionVolume>();
+        public List<CollisionVolume> closedList = new List<CollisionVolume>();
 
-        // Use this for initialization
-        void Start()
+        void Awake()
         {
-            xValues = new List<CollisionVolume2D>(GetComponents<CollisionVolume2D>());
-            yValues = new List<CollisionVolume2D>(GetComponents<CollisionVolume2D>());
+            foreach(var volume in xValues)
+            {
+                activeList.Add(volume);
+            }
+
+            foreach(var volume in yValues)
+            {
+                activeList.Add(volume);
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            foreach (var cv in activeList)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireCube(cv.volume, new Vector3(1.1f, 1.1f, 1.1f));
+            }
+        }
+
+
+        public void Update()
+        {
+            CheckCollisionForXAxis();
+            CheckCollisionForYAxis();
         }
 
         public void CheckCollisionForXAxis()
@@ -26,10 +48,9 @@ namespace AABB
             {
                 foreach(var volume in xValues)
                 {
-                    activeList.Add(volume);
                     if(activeList.Count >= 2)
                     {
-                        if(activeList[0].min.x < activeList[1].max.x)
+                        if(activeList[0].min.x <= activeList[1].max.x)
                         {
                             closedList.Add(activeList[0]);
                             activeList.Remove(activeList[0]);
@@ -47,10 +68,9 @@ namespace AABB
             {
                 foreach (var volume in yValues)
                 {
-                    activeList.Add(volume);
                     if (activeList.Count >= 2)
                     {
-                        if (activeList[0].min.y < activeList[1].max.y)
+                        if (activeList[0].min.y <= activeList[1].max.y)
                         {
                             closedList.Add(activeList[0]);
                             activeList.Remove(activeList[0]);

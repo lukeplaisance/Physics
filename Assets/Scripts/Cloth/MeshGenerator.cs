@@ -16,7 +16,7 @@ namespace Cloth
         private List<Vector2> UVs = new List<Vector2>();
 
         [SerializeField]
-        private ClothGeneratorBehaviour cloth;
+        private ClothGeneratorBehavior cloth;
         private Particle particle;
 
 

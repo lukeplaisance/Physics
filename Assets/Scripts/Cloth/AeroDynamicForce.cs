@@ -5,9 +5,7 @@ using LukeTools;
 
 public class AeroDynamicForce
 {
-    public Vector3 density; //density of air
-    private float Cd; //coefficient of drag for the object
-    private Vector3 a; //cross sectional area of the object
+    public Vector3 aeroForce; //active force of the air
 
     public Particle r1; //particle 1
     public Particle r2; //particle 2
@@ -18,7 +16,7 @@ public class AeroDynamicForce
         r1 = p1;
         r2 = p2;
         r3 = p3;
-        density = new Vector3(0, 0, 1);
+        aeroForce = new Vector3(0, 0, 1);
     }
 
     public bool CheckParticles(Particle par)
@@ -30,7 +28,7 @@ public class AeroDynamicForce
     {
         //calculate the average velocity of the particles
         var Vs = (r1.Velocity + r2.Velocity + r3.Velocity) / 3;
-        var V = Vs - density;
+        var V = Vs - aeroForce;
 
         //calculate the normal of the triangle
         var diffofR2andR1 = r2.Position - r1.Position;
