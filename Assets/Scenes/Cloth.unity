@@ -557,24 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca09dea4217fe04392ccb139a6ef222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spring:
-    ks: 0
-    kd: 0
-    p1:
-      gravity: {x: 0, y: 0, z: 0}
-      isAnchor: 0
-      isActive: 0
-      name: 
-    p2:
-      gravity: {x: 0, y: 0, z: 0}
-      isAnchor: 0
-      isActive: 0
-      name: 
-  particle:
-    gravity: {x: 0, y: 0, z: 0}
-    isAnchor: 0
-    isActive: 0
-    name: 
+  cg: {fileID: 2104083788}
   gravitySlider: {fileID: 1857613341}
   ksSlider: {fileID: 1055886570}
   kdSlider: {fileID: 308411533}
@@ -909,7 +892,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 10
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2385,6 +2368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Particles: []
+  Springs: []
   Lines: []
   linePrefab: {fileID: 120461977764573120, guid: 4dca84fc72b8c2043918c7a0835164bc,
     type: 2}
