@@ -13,6 +13,8 @@ namespace LukeTools
         public Vector3 Displacement { get; set; }
         public Vector3 Force { get; set; }
         public float Mass { get; set; }
+
+        public Vector3 gravity;
         public bool isAnchor;
         public bool isActive = true;
         public string name = "null";
@@ -20,7 +22,6 @@ namespace LukeTools
         public Particle(Vector3 pos)
         {
             Position = pos;
-            Velocity = new Vector3(0, -1, 0);
             Mass = 1;
         }
 

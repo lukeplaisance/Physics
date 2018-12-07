@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using LukeTools;
 using UnityEditor;
+using UnityEngine.UI;
 
 namespace Cloth
 {
@@ -10,8 +11,10 @@ namespace Cloth
     {
         public List<Particle> Particles = new List<Particle>();
         private List<GameObject> gameObjects = new List<GameObject>();
-        private List<SpringDamper> Springs = new List<SpringDamper>();
+        public List<SpringDamper> Springs = new List<SpringDamper>();
         public List<AeroDynamicForce> Triangles = new List<AeroDynamicForce>();
+        public List<LineRenderer> Lines = new List<LineRenderer>();
+        public LineRenderer linePrefab;
 
         private SpringDamper spring;
         public float width;
@@ -26,12 +29,14 @@ namespace Cloth
 
         public void GenCloth()
         {
+            
             for (float x = 0; x < width; x++)
             {
                 for (float y = 0; y < height; y++)
                 {
                     Particles.Add(new Particle(new Vector3(x, y, 0)));
                     var newObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                   
                     newObj.transform.position = Particles[Particles.Count - 1].Position;
                     gameObjects.Add(newObj);
                 }
@@ -40,22 +45,31 @@ namespace Cloth
             //adding the spring dampers
             for (int i = 0; i < Particles.Count; i++)
             {
+
                 if (i % width != width - 1)
                 {
                     Springs.Add(new SpringDamper(Particles[i], Particles[i + 1]));
+                    var newLine = Instantiate(linePrefab);
+                    Lines.Add(newLine);                 
                 }
                 if (i < Particles.Count - width)
                 {
                     Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width]));
+                    var newLine = Instantiate(linePrefab);
+                    Lines.Add(newLine);                    
                 }
 
                 if (i % width != width - 1 && i < Particles.Count - width)
                 {
                     Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width + 1]));
+                    var newLine = Instantiate(linePrefab);
+                    Lines.Add(newLine);                    
                 }
                 if (i % width != 0 && i < Particles.Count - height)
                 {
                     Springs.Add(new SpringDamper(Particles[i], Particles[i + (int)width - 1]));
+                    var newLine = Instantiate(linePrefab);
+                    Lines.Add(newLine);                    
                 }
             }
 
@@ -116,7 +130,7 @@ namespace Cloth
                     grabbed.isActive = true;
                     for(var i = 0; i < Springs.Count; i++)
                     {
-                        if(Springs[i].CheckParticles(grabbed))
+                        if(Springs[i + 1].CheckParticles(grabbed))
                         {
                             Springs.RemoveAt(i);
                         }
@@ -143,6 +157,8 @@ namespace Cloth
             foreach (var s in Springs)
             {
                 s.Update();
+                Lines[Springs.IndexOf(s)].SetPosition(0, s.p1.Position);
+                Lines[Springs.IndexOf(s)].SetPosition(1, s.p2.Position);
             }
             foreach (var force in Triangles)
             {
@@ -151,8 +167,7 @@ namespace Cloth
 
             foreach (var particle in Particles)
             {
-                var gravity = new Vector3(0, -9.81f, 0);
-                particle.AddForce(gravity * .25f);
+                particle.AddForce(particle.gravity * .25f);
                 particle.Update(Time.deltaTime);
             }
 
@@ -162,6 +177,8 @@ namespace Cloth
                 gameObjects[i].transform.localScale = new Vector3(.2f, .2f, .2f);
                 Destroy(gameObjects[i].GetComponent("SphereCollider"));
             }
+
+
         }
     }
 }

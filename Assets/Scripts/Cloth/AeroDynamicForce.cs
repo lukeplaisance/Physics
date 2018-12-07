@@ -16,7 +16,7 @@ public class AeroDynamicForce
         r1 = p1;
         r2 = p2;
         r3 = p3;
-        aeroForce = new Vector3(0, 0, 1);
+        aeroForce = new Vector3(0, 0, 0);
     }
 
     public bool CheckParticles(Particle par)
