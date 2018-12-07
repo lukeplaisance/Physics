@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UI;
 
 namespace LukeTools
 {
@@ -9,8 +10,10 @@ namespace LukeTools
         [SerializeField]
         public List<ParticleData> Boids;
         public List<GameObject> gameObjects;
-
         public float flock = 1.0f;
+        public Toggle v1toggle;
+        public Toggle v2toggle;
+        public Toggle v3toggle;
 
         //resets the boid's position on start
         private void Start()
@@ -19,6 +22,7 @@ namespace LukeTools
             {
                 p.Position = new Vector3(0, Random.Range(5, 10), 0);
             }
+
         }
 
         private void LateUpdate()
@@ -32,7 +36,7 @@ namespace LukeTools
 
         public void MoveBoidsToNewPosition()
         {
-            //declare vectors for the 3 boid rules methods
+            //declare vectors for the 3 boid rules methods and one for the boundaries
             Vector3 v1;
             Vector3 v2;
             Vector3 v3;
@@ -58,13 +62,37 @@ namespace LukeTools
 
                 if (b.perch_timer == 50)
                 {
-                    v2 = flock * Boid_Cohesion(b);
-                    v3 = Boid_Dispersion(b);
-                    v4 = Boid_Alignment(b);
-                    v1 = Bound_Position(b);
+                    //checks to see if the toggles are either on or off
+                    if (v1toggle.isOn)
+                    {
+                        //calls Rule 1
+                        v1 = flock * Boid_Cohesion(b);
+                    }
+                    else
+                        v1 = -flock * Boid_Cohesion(b);
+
+                    if (v2toggle.isOn)
+                    {
+                        //calls Rule 2
+                        v2 = Boid_Dispersion(b);
+                    }
+                    else
+                        v2 = -Boid_Dispersion(b);
 
 
-                    b.Velocity = b.Velocity + v2 + v3 + v4 * Time.deltaTime;
+                    b.Velocity += v1 + v2 * Time.deltaTime;
+
+
+                    if (v3toggle.isOn)
+                    {
+                        //calls Rule 3
+                        v3 = Boid_Alignment(b);
+                        b.Velocity += v1 + v2 + v3 * Time.deltaTime;
+                    }
+                    else
+                        b.Velocity += v1 + v2 * Time.deltaTime;
+
+                    v4 = Bound_Position(b);
 
                     if (b.Velocity.magnitude > 10)
                         b.Velocity = b.Velocity.normalized;
@@ -143,19 +171,19 @@ namespace LukeTools
         public Vector3 Boid_Dispersion(ParticleData b)
         {
             //the displacement of each boid
-            Vector3 c = Vector3.zero;
+            Vector3 d = Vector3.zero;
 
-            //if the position of a boid is less thatn 5 units away from another, 
+            //if the position of a boid is less than or equal to 15 units away from another, 
             //the boid will go the opposite way
             foreach (var item in Boids)
             {
                 if (item != b)
                     if ((item.Position - b.Position).magnitude <= 15)
                     {
-                        c = c - (item.Position - b.Position);
+                        d = d - (item.Position - b.Position);
                     }
             }
-            return c;
+            return d;
         }
 
         public Vector3 Boid_Alignment(ParticleData b)
