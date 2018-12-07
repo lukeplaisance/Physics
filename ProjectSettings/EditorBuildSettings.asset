@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Boids.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Cloth.unity
     guid: 3d8c6a42fa7a0dd42a9fecb473659f03
+  - enabled: 1
+    path: Assets/Scenes/AABB.unity
+    guid: f8e00d19be9ef03409e95a605912d50f
   m_configObjects: {}
