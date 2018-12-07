@@ -8,8 +8,6 @@ namespace AABB
     public class SortAndSweepBehavior : MonoBehaviour
     {
         public List<CollisionVolume> AllVolumes = new List<CollisionVolume>();
-        //public List<CollisionVolume> xValues = new List<CollisionVolume>();
-        //public List<CollisionVolume> yValues = new List<CollisionVolume>();
         public List<CollisionVolume> activeList = new List<CollisionVolume>();
         public List<CollisionVolume> closedList = new List<CollisionVolume>();
 
